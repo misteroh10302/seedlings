@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import fire from './Fire';
+import OrderCompleted from './OrderCompleted';
 import './App.css';
+import { withRouter} from 'react-router-dom'
 
 class Registry extends Component {
   constructor(props){
@@ -12,15 +14,17 @@ class Registry extends Component {
       date: null,
       location: null,
       currentItems: [],
-      myTotal: 0
+      myTotal: 0,
+      popUp: 'hidden'
 
     }
   }
 
   componentWillMount(){
     this.props.updateCurrent(this.props.regName);
+
     if (this.props.currentReg) {
-      var current = this.props.currentReg.replace(/ /g,'');
+      // var current = this.props.currentReg.replace(/ /g,'');
       var that = this
 
       var theRegistrys = fire.database().ref('/regItems').child(this.props.regName);
@@ -57,13 +61,14 @@ class Registry extends Component {
       var currentPath = window.location;
       var leadsRef = fire.database().ref('registrys').child(that.state.currentName);
       var regItems = fire.database().ref('regItems').child(that.state.currentName);
+      var amountLeft
 
+      // Find the items in the registry
       regItems.on('value',function(childSnap){
-
         childSnap.forEach(function(child){
-
           that.setState({
             currentItems: child.val()
+
           });
 
         });
@@ -93,6 +98,14 @@ class Registry extends Component {
 
                 });
             });
+
+        //     var amountLeft = 120;
+        //
+        // for(var i = 0, len = this.state.currentItems.length; i < len; i++) {
+        //           amountLeft += parseInt(this.state.currentItems[i].itemPrice);
+        //           console.log(amountLeft)
+        //     }
+
       this.setState({
         myreg: myRegistrys,
         currentName: this.props.regName
@@ -101,23 +114,56 @@ class Registry extends Component {
 
     }
 
+
   }
+    componentDidMount(){
+
+    }
 
   handleChange(e){
-      var key = "number"+e.target.id;
+      var key = e.target.id;
       var val = e.target.value;
       var obj  = {}
       obj[key] = val
       this.setState(obj)
-      this.setState({myTotal : parseInt(this.state.number1) + parseInt(this.state.number2) });
+
+
+  }
+
+  showPop(){
+    if (this.state.popUp != "shown"){
+      this.setState({
+        popUp: 'shown'
+      });
+    } else {
+      this.setState({
+        popUp: 'hidden'
+      });
+      this.props.history.push("/");
+    }
 
   }
 
   render() {
-    // var myTotal = 0;
-    //   for(var i = 0, len = this.state.currentItems.length; i < len; i++) {
-    //     myTotal += parseInt(this.state.currentItems[i].itemPrice);
-    // }
+    // calculate the users total!
+    var myTotal = 0;
+    var theActualTotal = 0;
+    var amountLeft = 0;
+
+    for(var i = 0, len = this.state.currentItems.length; i < len; i++) {
+
+        var currentNum = parseInt(this.state[i]);
+        // Check to make sure that the number is not NAN
+        if (!currentNum) {
+          currentNum = 0;
+        }
+        if (currentNum === undefined) {
+          myTotal += 0;
+        } else {
+          myTotal += currentNum;
+        }
+          amountLeft += parseInt(this.state.currentItems[i].itemPrice);
+    }
 
 
     return (
@@ -149,14 +195,15 @@ class Registry extends Component {
         </div>
         <div>
           <h3>Your Total </h3>
-          <div>Your current total is: ${this.state.myTotal}</div>
-          <input type="submit" value="Complete Order"/>
+          <div>Your current total is: $ {myTotal}</div>
+          <input onClick={this.showPop.bind(this)} type="submit" value="Complete Order"/>
         </div>
 
         </main>
+        <OrderCompleted  show={this.showPop.bind(this)} popUp={this.state.popUp}/>
       </div>
     );
   }
 }
 
-export default Registry;
+export default withRouter(Registry);

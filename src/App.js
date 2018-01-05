@@ -9,8 +9,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Blog from './Blog';
 import './App.css';
-import { createHashHistory } from 'history'
-import { BrowserRouter, Route, Link, matchRoute, browserHistory } from 'react-router-dom'
+import { BrowserRouter, Route} from 'react-router-dom'
 
 class App extends Component {
   constructor(props){

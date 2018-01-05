@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import fire from './Fire';
 import './App.css';
 
 class Blog extends Component {

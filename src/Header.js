@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
-import { BrowserRouter, Route, Link } from 'react-router-dom'
-
+import { Link } from 'react-router-dom'
 
 const Header = (props) => (
   <div className="theHeader">
     <nav>
       <Link to="/" className="logo"><h1>The Seedlings</h1></Link>
       <ul>
-        <a onClick={props.showModal} href="#">Sign Up / Login</a>
+        <a onClick={props.showModal}>Sign Up / Login</a>
         <Link className={props.showLog} to="/profile">Profile</Link>
         <Link to="/blog">Blog</Link>
         <Link to="/#mission">Mission</Link>

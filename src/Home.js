@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import fire from './Fire';
 import './App.css';
-import { BrowserRouter, Route, Link, HashRouter, withRouter } from 'react-router-dom'
+import {  Link, withRouter } from 'react-router-dom'
 
 class Home extends Component {
   constructor(props) {
@@ -70,14 +70,7 @@ class Home extends Component {
   }
 
   createMe(){
-    if (this.props.loggedIn === true) {
          this.props.history.push("/create-registry");
-
-    } else {
-      console.log('not logged')
-      {this.props.showModal()}
-    }
-
   }
 
 
@@ -93,13 +86,13 @@ class Home extends Component {
               <h2>Registry Ideas</h2>
               <div>
                 <div>
-                  <h3></h3>
+                  <h3>Idea</h3>
                 </div>
                 <div>
-                  <h3></h3>
+                  <h3>Idea</h3>
                 </div>
                 <div>
-                  <h3></h3>
+                  <h3>Idea</h3>
                 </div>
               </div>
             </section>
@@ -124,13 +117,13 @@ class Home extends Component {
               <h2>Blog Posts</h2>
               <div>
                 <div>
-                  <h3></h3>
+                  <h3>Idea</h3>
                 </div>
                 <div>
-                  <h3></h3>
+                  <h3>Idea</h3>
                 </div>
                 <div>
-                  <h3></h3>
+                  <h3>Idea</h3>
                 </div>
               </div>
             </section>

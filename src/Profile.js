@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import fire from './Fire';
 import './App.css';
-import { BrowserRouter, Route, Link, matchRoute, browserHistory } from 'react-router-dom'
+import {Link } from 'react-router-dom'
 
 
 class Profile extends Component {
